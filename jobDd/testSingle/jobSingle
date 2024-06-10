@@ -1,0 +1,28 @@
+#!/bin/bash -l
+
+# The name of the script is mytest
+#SBATCH -J single
+
+# 12 hour wall-clock time will be given to this job
+#SBATCH -t 12:00:00
+
+#SBATCH -A naiss2023-1-26
+
+# Set the partition for your job. 
+#SBATCH -p shared
+
+# The number of cores requested
+#SBATCH -n 1
+
+#SBATCH --mem=2GB
+
+# Load the environments
+module load PDC/23.12 &&
+module load openmpi/4.1.2-gcc9.3.0 &&
+source /cfs/klemming/projects/snic/lufmreact/yuchen/software/OpenFOAM/OpenFOAM-10/OpenFOAM-10/etc/bashrc
+
+# run the case
+cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
+cd cavity
+blockMesh >& log.blockMesh
+icoFoam >& log.icoFoam

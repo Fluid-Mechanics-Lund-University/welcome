@@ -1,0 +1,35 @@
+#!/bin/bash -l
+
+# The name of the script is mytest
+#SBATCH -J twoNodes
+
+# 12 hour wall-clock time will be given to this job
+#SBATCH -t 00:02:00
+
+#SBATCH -A naiss2023-1-26
+
+# Set the partition for your job. 
+#SBATCH -p main
+
+# Number of nodes
+#SBATCH --nodes=2
+
+# Number of MPI tasks per node
+#SBATCH --ntasks-per-node=2
+
+
+#SBATCH --mem=256GB
+
+# Load the environments
+module load PDC/23.12 &&
+module load openmpi/4.1.2-gcc9.3.0 &&
+source /cfs/klemming/projects/snic/lufmreact/yuchen/software/OpenFOAM/OpenFOAM-10/OpenFOAM-10/etc/bashrc
+
+# run the case
+cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
+cd cavity
+blockMesh >& log.blockMesh
+cp -r $FOAM_TUTORIALS/multiphase/interFoam/laminar/damBreak/damBreak/system/decomposeParDict system
+decomposePar -force -fileHandler collated >& log.decomposePar
+mpirun -n 4 icoFoam -parallel -fileHandler collated >& log.icoFoam
+reconstructPar >& log.reconstructPar

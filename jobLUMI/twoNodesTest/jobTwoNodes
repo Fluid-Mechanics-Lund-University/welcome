@@ -1,0 +1,27 @@
+#!/bin/bash -l
+#SBATCH --job-name=twoNodes   # Job name
+#SBATCH --output=twoNodes.o%j # Name of stdout output file
+#SBATCH --error=twoNodes.e%j  # Name of stderr error file
+#SBATCH --partition=standard    # Partition (queue) name
+#SBATCH --nodes=2               # Total number of nodes 
+#SBATCH --ntasks=256    # Number of mpi tasks per node
+#SBATCH --time=0-00:30:00       # Run time (d-hh:mm:ss)
+#SBATCH --mail-type=all         # Send email at begin and end of job
+#SBATCH --account=project_465000924  # Project for billing
+#SBATCH --mail-user=yuchen.zhou@energy.lth.se
+
+# load modules
+module load LUMI/23.09  partition/C
+module load OpenFOAM/10-cpeGNU-23.09-20230119
+
+# commands
+cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
+cd cavity
+blockMesh >& log.blockMesh
+cp -r $FOAM_TUTORIALS/multiphase/interFoam/laminar/damBreak/damBreak/system/decomposeParDict system
+decomposePar -force -fileHandler collated >& log.decomposePar
+srun -n 4 icoFoam -parallel -fileHandler collated >& log.icoFoam
+reconstructPar -fileHandler collated >& log.reconstructPar
+
+
+

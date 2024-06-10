@@ -1,0 +1,27 @@
+#!/bin/bash -l
+#SBATCH --job-name=parallel   # Job name
+#SBATCH --output=parallel.o%j # Name of stdout output file
+#SBATCH --error=parallel.e%j  # Name of stderr error file
+#SBATCH --partition=small       # Partition (queue) name
+#SBATCH --ntasks=4              # N tasks
+#SBATCH --mem=8G               # Memory, note I will be billing by max(mem/2, ntasks)
+#SBATCH --cpus-per-task=1     
+#SBATCH --time=00:05:00         # Run time (hh:mm:ss)
+#SBATCH --mail-type=all         # Send email at begin and end of job
+#SBATCH --account=project_465000924  # Project for billing
+#SBATCH --mail-user=yuchen.zhou@energy.lth.se
+
+# load modules
+module load LUMI/23.09  partition/C
+module load OpenFOAM/10-cpeGNU-23.09-20230119
+
+# commands
+cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
+cd cavity
+blockMesh >& log.blockMesh
+cp -r $FOAM_TUTORIALS/multiphase/interFoam/laminar/damBreak/damBreak/system/decomposeParDict system
+decomposePar -force -fileHandler collated >& log.decomposePar
+srun -n 4 icoFoam -parallel -fileHandler collated >& log.icoFoam
+reconstructPar -fileHandler collated >& log.reconstructPar
+
+

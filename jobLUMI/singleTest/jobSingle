@@ -1,0 +1,25 @@
+#!/bin/bash -l
+#SBATCH --job-name=single   # Job name
+#SBATCH --output=single.o%j # Name of stdout output file
+#SBATCH --error=single.e%j  # Name of stderr error file
+#SBATCH --partition=small       # Partition (queue) name
+#SBATCH --ntasks=1              # One task (process)
+#SBATCH --mem=8G               # Memory Note, I will be billing by max(mem/2, ntasks)
+#SBATCH --cpus-per-task=1     # Number of cores (threads)
+#SBATCH --time=00:05:00         # Run time (hh:mm:ss)
+#SBATCH --mail-type=all         # Send email at begin and end of job
+#SBATCH --account=project_465000924  # Project for billing
+#SBATCH --mail-user=yuchen.zhou@energy.lth.se
+
+# load modules
+module load LUMI/23.09  partition/C
+module load OpenFOAM/10-cpeGNU-23.09-20230119
+
+# commands
+cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
+cd cavity
+blockMesh >& log.blockMesh
+icoFoam >& log.icoFoam
+reconstructPar >& log.reconstructPar
+
+
