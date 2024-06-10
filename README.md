@@ -137,6 +137,9 @@ If you see some error output, try it again.
    module load openmpi/4.1.2-gcc9.3.0 &&
    module load <your FOAM_BASHRC file>
 ```
+Please note that, you might need to load it BEFORE submitting jobs. 
+And delete relevant loading lines in the job scripts, for unknown reasons.
+
 
 1.3 A simple test: four jobscripts in jobLUMI, please see previous tutorial on tetralith. You might need to change the line about sourcing the OpenFOAM environment.
 
