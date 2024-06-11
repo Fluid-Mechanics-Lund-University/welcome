@@ -184,10 +184,6 @@ Run the following command to apply the changes:
 ```bash
 source ~/.bashrc
 ```
-or
-```bash
-source ~/.bash_profile
-```
 
 #### Usage Examples
 
