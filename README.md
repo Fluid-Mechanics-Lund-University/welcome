@@ -278,7 +278,7 @@ To download a directory named `project_results` from the server to your local `~
 scp -r $lumiyuchenflash/project_results ~/Downloads
 ```
 
-#### Summary
+##### Summary
 
 - **Set up environment variables and aliases** in your shell configuration file.
 - **Use `ssh` or the `lumi` alias** to access the server.
@@ -286,4 +286,19 @@ scp -r $lumiyuchenflash/project_results ~/Downloads
 
 By following these steps, you should be able to easily transfer files to and from the server. If you encounter any issues, feel free to reach out for help. Happy coding!
 
+#### Something to note
+##### Note counts
+- **Tetralith**: Each node typically has 32 cores.
+- **Dardel and LUMI**: Each node typically has 128 cores.
+- Suitable for large computational tasks.
 
+##### Use Shared Nodes for Smaller Cases
+- Shared nodes allow multiple users to share the same node, managed automatically by the supercomputer.
+- Ideal for smaller tasks that don't require an entire node.
+
+##### Billing Calculation
+- Based on core hours: if you use N cores for M hours, your usage is billed as N*M core hours.
+- For shared nodes, billing may also consider memory usage. Generally, 2 GB of memory usage is associated with 1 core. If you allocate 64 GB of memory but request only 2 cores, you will be billed as if you are using 32 cores.
+
+##### Node Selection in LUMI
+- If your case requires fewer than 512 cores, consider submitting it to small nodes (shared nodes) rather than standard nodes (entire nodes). This can sometimes be faster.
