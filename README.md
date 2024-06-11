@@ -145,7 +145,74 @@ And delete relevant loading lines in the job scripts, for unknown reasons.
 
 
 ### Setting up working directories
+Certainly! Here is the markdown tutorial with the highest level as `###`:
 
+```markdown
+### Setting Up Environment Variables and Aliases
+
+#### Steps
+
+##### 1. Open Your Shell Configuration File
+Open your `.bashrc` with `vim`:
+
+```bash
+vim ~/.bashrc
+```
+
+
+##### 2. Add Environment Variables and Aliases
+Add the following lines:
+
+```bash
+# Define the directory for job scripts, REMEMBER TO CHANGE TO YOUR ROUTES
+export jobScripts="/users/zhouyuch/jobScripts"
+
+# Alias to quickly navigate to the project working directory
+alias proj="cd /scratch/project_465000924/yuchen"
+
+# Define the location of the project working directory
+export projLoc="/scratch/project_465000924/yuchen"
+```
+
+##### 3. Save and Close the File
+To save and exit in `vim`, press `ESC`, then type `:wq` and press `ENTER`.
+
+##### 4. Apply the Changes
+Run the following command to apply the changes:
+
+```bash
+source ~/.bashrc
+```
+or
+```bash
+source ~/.bash_profile
+```
+
+#### Usage Examples
+
+##### Navigating to the Project Directory
+```bash
+proj
+```
+
+##### Accessing Job Scripts Directory
+```bash
+ls $jobScripts
+# or 
+cp  $jobScripts/<a script your want> <target position>
+```
+
+##### Working with Large Files
+```bash
+cp large_file.txt $projLoc
+```
+or
+```bash
+cd $projLoc
+```
+```
+
+This guide is now formatted with `###` as the highest level heading, keeping the instructions brief and clear.
 
 ### Uploading and downloading files
 
