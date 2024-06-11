@@ -145,12 +145,9 @@ And delete relevant loading lines in the job scripts, for unknown reasons.
 
 
 ### Setting up working directories
-Certainly! Here is the markdown tutorial with the highest level as `###`:
 
-```markdown
-### Setting Up Environment Variables and Aliases
+#### Steps on Setting Up Environment Variables and Aliases
 
-#### Steps
 
 ##### 1. Open Your Shell Configuration File
 Open your `.bashrc` with `vim`:
@@ -173,6 +170,10 @@ alias proj="cd /scratch/project_465000924/yuchen"
 # Define the location of the project working directory
 export projLoc="/scratch/project_465000924/yuchen"
 ```
+
+Note:
+- Use variable names (jobScripts etc.) that is easy to remember for you!
+- Replace my route with your route.
 
 ##### 3. Save and Close the File
 To save and exit in `vim`, press `ESC`, then type `:wq` and press `ENTER`.
@@ -202,19 +203,91 @@ ls $jobScripts
 cp  $jobScripts/<a script your want> <target position>
 ```
 
-##### Working with Large Files
-```bash
-cp large_file.txt $projLoc
-```
-or
-```bash
-cd $projLoc
-```
-```
-
-This guide is now formatted with `###` as the highest level heading, keeping the instructions brief and clear.
-
 ### Uploading and downloading files
+#### Simple SCP Tutorial for New PhD Students
 
+Here is a quick tutorial on how to use `scp` (secure copy protocol) to upload and download files from the server. This guide will help you set up your environment and perform basic file transfers.
+
+#### Setting Up Your Environment
+
+First, you'll need to set up some environment variables and aliases in your shell configuration file (e.g., `.bashrc`, `.zshrc`) in your LOCAL COMPUTER. Add the following lines to your configuration file:
+
+```bash
+export lumiyuchenflash="zhouyuch@lumi.csc.fi:/pfs/lustref1/flash/project_465000924/yuchen"
+alias lumi="ssh zhouyuch@lumi.csc.fi"
+```
+
+
+Note:
+- Use variable names (jobScripts etc.) that is easy to remember for you!
+- Replace my route with your route.
+
+After adding these lines, make sure to source your configuration file to apply the changes:
+
+```bash
+source ~/.bashrc  # or source ~/.zshrc if you're using zsh
+```
+
+#### Accessing the Server
+
+To access the server, you have two options:
+
+1. **Direct SSH**:
+    ```bash
+    ssh zhouyuch@lumi.csc.fi
+    ```
+
+2. **Using the alias**:
+    ```bash
+    lumi
+    ```
+
+Both commands will log you into the server.
+
+#### Transferring Files with SCP
+
+##### Uploading Files to the Server
+
+To upload files to the server, use the `scp` command with the `-r` option to recursively copy directories. Here's the general format:
+
+```bash
+scp -r <files_to_be_transferred> $lumiyuchenflash
+```
+
+##### Downloading Files from the Server
+
+To download files from the server to your local machine, reverse the order of the source and destination:
+
+```bash
+scp -r $lumiyuchenflash/<files_to_be_transferred> <local_destination>
+```
+
+#### Examples
+
+##### Upload Example
+
+To upload a directory named `my_data` to the server:
+
+```bash
+scp -r my_data $lumiyuchenflash
+```
+
+In this command, $lumiyuchenflash is an environment variable that holds the destination path on the server. This variable is set to zhouyuch@lumi.csc.fi:/pfs/lustref1/flash/project_465000924/yuchen, which specifies the server address and the directory where the files will be uploaded.
+
+##### Download Example
+
+To download a directory named `project_results` from the server to your local `~/Downloads` directory:
+
+```bash
+scp -r $lumiyuchenflash/project_results ~/Downloads
+```
+
+#### Summary
+
+- **Set up environment variables and aliases** in your shell configuration file.
+- **Use `ssh` or the `lumi` alias** to access the server.
+- **Use `scp -r`** to upload or download files between your local machine and the server.
+
+By following these steps, you should be able to easily transfer files to and from the server. If you encounter any issues, feel free to reach out for help. Happy coding!
 
 
