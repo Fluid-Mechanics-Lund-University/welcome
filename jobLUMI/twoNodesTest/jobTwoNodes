@@ -10,11 +10,16 @@
 #SBATCH --account=project_465000924  # Project for billing
 #SBATCH --mail-user=yuchen.zhou@energy.lth.se
 
-# load modules
-module load LUMI/23.09  partition/C
-module load OpenFOAM/10-cpeGNU-23.09-20230119
+## load modules
+# for openfoam 10
+export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/9.1 && 
+source /flash/project_465000924/yuchen/software/OpenFOAM/OpenFOAM-10-cray/OpenFOAM-10/etc/bashrc
 
-# commands
+# for openfoam 7
+# export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/9.1 && 
+# source /flash/project_465000924/yuchen/software/OpenFOAM/OpenFOAM-7-cray/OpenFOAM-7/etc/bashrc
+
+## commands
 cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity .
 cd cavity
 blockMesh >& log.blockMesh
