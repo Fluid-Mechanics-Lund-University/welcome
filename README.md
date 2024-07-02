@@ -6,7 +6,7 @@ This tutorial covers the usage guide for three specific clusters: Tetralith, Dar
 
 ### Tetralith, Dardel, and LUMI Clusters
 
-#### Tetralith
+#### Tetralith (Not valid anymore)
 
 We take OpenFOAM-10 as an example
 
@@ -42,7 +42,7 @@ If everything goes well, you will see the result directories (0.1, 0.2, ...) in 
 
 
 
-#### Dardel
+#### Dardel (not valid anymore)
 Still, we take OpenFOAM-10 as an example
 
 Since OpenFOAM-10 is not installed in Dardel, we compile it by ourselves.
