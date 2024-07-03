@@ -2,11 +2,15 @@
 
 Welcome to our tutorial designed specifically for new PhD and internship students! This guide aims to introduce you to the basics of using supercomputers, providing you with the essential knowledge and skills needed to effectively utilize these powerful computational resources for your research.
 
-This tutorial covers the usage guide for three specific clusters: Tetralith, Dardel, and LUMI. For each cluster, you will learn how to run an OpenFOAM program and how to compile code.
+This tutorial covers the usage guide for three specific clusters: Tetralith, Dardel, and LUMI. For each cluster, you will learn how to make OpenFOAM work for you. Tutorials might include using built-in installations, as well as building your own OpenFOAM.
 
-### Tetralith, Dardel, and LUMI Clusters
+<span style="color: red;">Students may have questions about creating accounts, setting up connections, and transferring files. Please note that this tutorial does not cover how to gain access to the supercomputer. Instead, it focuses exclusively on how to effectively use OpenFOAM on supercomputers. For information on accessing the supercomputer, please refer to the emails from the supercomputer administrators and visit their official websites.</span>
 
-#### Tetralith (Not valid anymore)
+<span style="color: blue;">After getting access to the super computer, you can copy this tutorial repository to the supercomputer. Some template job scripts are attached. Read, modify and submit them to see if they works.</span>
+
+## Tetralith, Dardel, and LUMI Clusters
+
+### Tetralith (Not valid anymore)
 
 We take OpenFOAM-10 as an example
 
@@ -26,7 +30,7 @@ We take OpenFOAM-10 as an example
 Please refer to [this link](https://www.nsc.liu.se/software/installed/tetralith/OpenFOAM/) for mre information about loading other versions of OpenFOAM.
 For more information regarding job scripts, read [the official guide](https://www.nsc.liu.se/support/batch-jobs/introduction/).
 
-3. A simple test: some jobscripts are provided in jobTet. Go to each directiory and submit the job
+3. A simple test: some jobscripts are provided in jobTet. Transfer them to the supercomputer and go to each directiory and submit the job
    ```bash
    sbatch <jobScriptName>
    ```
@@ -40,56 +44,68 @@ If everything goes well, you will see the result directories (0.1, 0.2, ...) in 
 
 
 
+### Dardel 
 
-
-#### Dardel (not valid anymore)
-Still, we take OpenFOAM-10 as an example
-
-Since OpenFOAM-10 is not installed in Dardel, we compile it by ourselves.
-(OpenFOAM-7 is installed, but the official guide does not work that well...)
-1. Download the OpenFOAM
+#### Built-in installation (recommended)
+Dardel has installed both OpenFOAM-7 and OpenFOAM-10. To load OpenFOAM modules, execute
 ```bash
-   ## go to the work directory and then execute the following
-   mkdir build 
-   cd build
-   mkdir OpenFOAM-10
-   cd OpenFOAM-10
-   git clone https://github.com/OpenFOAM/OpenFOAM-10.git
-   git clone https://github.com/OpenFOAM/ThirdParty-10.git
+module load PDC &&
+module load openfoam/7 ## change to 10 if necessary, other versions might work but have not been tested
+source $FOAM_BASHRC
 ```
 
-2. Load the environment
+#### Test
+Some jobscripts are provided in jobDd. Transfer them to the supercomputer and go to each directiory and submit the job
 ```bash
-   ## load the gcc/mpi for compilations and compile the codes
-   module load PDC/23.12 &&
-   module load openmpi/4.1.2-gcc9.3.0 &&
-   source OpenFOAM-10/etc/bashrc
-   cd ThirdParty-10
-   ./Allwmake -j &&
+   sbatch <jobScriptName>
+```
+
+Please check each script, you can see that we need to
+- Specify the required resources, including time, memory, cores/nodes.
+- Load the environment
+- Execute the CFD program at last
+
+If everything goes well, you will see the result directories (0.1, 0.2, ...) in all tests.
+
+#### read if you are interested in install your own OpenFOAM
+1. Download and install OpenFOAM
+```bash
+   ### First, CREATE A FOLDER and ENTER IT. OpenFOAM will be installed in this folder.
+   module load PDC
+   export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/12.3
+   git clone https://github.com/OpenFOAM/ThirdParty-7.git ## change to other versions if necessary
+   git clone https://github.com/OpenFOAM/OpenFOAM-7.git  ## change to other versions if necessary
+   cd OpenFOAM-7
+   sed -i "s/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=SGIMPI/g" etc/bashrc
+   source etc/bashrc
+   cd ../ThirdParty-7
+   ./Allwmake -j >& log.Allwmake& &&
    wmRefresh &&
-   cd ..
-   cd OpenFOAM-10
-   ./Allwmake -j 
+   cd ../OpenFOAM-7
+   ./Allwmake -j >& log.Allwmake&
+
 ```
 
 Remember, run 
 ```bash
 $WM_PROJECT_DIR/etc/bashrc 
 ```
-to know your FOAM_BASHRC file. Record the output for future usage.
+to know YOUR BASHRC FILE LOCATION. Record the output for future usage.
 
-3. For customized compilations, such as when you are developing or using custom solvers and libraries, it's crucial to properly set up the compiling environment. This setup is necessary whether you are compiling custom solvers or libraries, or simply running any solver (original or customized). Follow these steps to load the required modules and the OpenFOAM environment:
+2. Use your own installation
+Run
 ```bash
-   module load PDC/23.12 &&
-   module load openmpi/4.1.2-gcc9.3.0 &&
-   module load <your FOAM_BASHRC file>
+module load PDC &&
+export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/12.3 &&
+source <YOUR BASHRC FILE LOCATION>
 ```
+It is suggested to set this as an alias, or put it in your job script templates.
 
 
-4. A simple test: four jobscripts in jobDd. Please see the previous tutorial on tetralith usage. You might need to change the line about sourcing the OpenFOAM environment.
 
+### LUMI
 
-#### LUMI
+#### Install your own OpenFOAM
 1. Load the relevant environment.
 
 1.1. For OpenFOAM-10
@@ -97,7 +113,6 @@ to know your FOAM_BASHRC file. Record the output for future usage.
 module load LUMI/23.09  partition/C
 module load OpenFOAM/10-cpeGNU-23.09-20230119
 ```
-
 
 1.2. For OpenFOAM-7
 
@@ -131,17 +146,19 @@ If you see some error output, try it again.
 ./Allwmake -j
 ```
 
-1.2.3. For customized compilations, such as when you are developing or using custom solvers and libraries, it's crucial to properly set up the compiling environment. This setup is necessary whether you are compiling custom solvers or libraries, or simply running any solver (original or customized). Follow these steps to load the required modules and the OpenFOAM environment:
-```bash
-   module load PDC/23.12 &&
-   module load openmpi/4.1.2-gcc9.3.0 &&
-   module load <your FOAM_BASHRC file>
-```
-Please note that, you might need to load it BEFORE submitting jobs. 
-And delete relevant loading lines in the job scripts, for unknown reasons.
+#### Test
+Some jobscripts are provided in jobLUMI. Transfer them to the supercomputer and go to each directiory and submit the job
+   ```bash
+   sbatch <jobScriptName>
+   ```
 
+Please check each script, you can see that we need to
+- Specify the required resources, including time, memory, cores/nodes.
+- Load the environment
+- Execute the CFD program at last
 
-1.3 A simple test: four jobscripts in jobLUMI, please see previous tutorial on tetralith. You might need to change the line about sourcing the OpenFOAM environment.
+If everything goes well, you will see the result directories (0.1, 0.2, ...) in all tests.
+
 
 
 ### Setting up working directories
