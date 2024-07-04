@@ -105,7 +105,7 @@ It is suggested to set this as an alias, or put it in your job script templates.
 
 ### LUMI
 
-#### Install your own OpenFOAM
+#### Load the installation of the group
 1. Load the relevant environment.
 
 ```bash
