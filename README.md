@@ -91,7 +91,7 @@ Remember, run
 ```bash
 $WM_PROJECT_DIR/
 ```
-to know YOUR BASHRC FILE LOCATION. YOUR BASHRC FILE LOCATION is <strong>$WM_PROJECT_DIR/etc/bashrc<strong>. Record the output for future usage. 
+to know YOUR BASHRC FILE LOCATION. YOUR BASHRC FILE LOCATION is <strong>$WM_PROJECT_DIR/etc/bashrc</strong>. Record the output for future usage. 
 
 2. Use your own installation
 Run
@@ -133,9 +133,10 @@ It is suggested to set this as an alias, or put it in your job script templates.
 ```
 Remember, run 
 ```bash
-$WM_PROJECT_DIR/etc/bashrc 
+$WM_PROJECT_DIR/
 ```
-to know YOUR BASHRC FILE LOCATION. Record the output for future usage.
+to know YOUR BASHRC FILE LOCATION. YOUR BASHRC FILE LOCATION is <strong>$WM_PROJECT_DIR/etc/bashrc</strong>. Record the output for future usage. 
+
 
 2. Use your own installation
 Run
