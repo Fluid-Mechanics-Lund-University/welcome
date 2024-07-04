@@ -42,7 +42,8 @@ Please check each script, you can see that we need to
 
 If everything goes well, you will see the result directories (0.1, 0.2, ...) in all tests.
 
-
+<br>
+<br>
 
 ### Dardel 
 
@@ -101,7 +102,8 @@ source <YOUR BASHRC FILE LOCATION>
 ```
 It is suggested to set this as an alias, or put it in your job script templates.
 
-
+<br>
+<br>
 
 ### LUMI
 
@@ -157,7 +159,8 @@ Please check each script, you can see that we need to
 
 If everything goes well, you will see the result directories (0.1, 0.2, ...) in all tests.
 
-
+<br>
+<br>
 
 ### Setting up working directories
 
@@ -213,6 +216,9 @@ ls $jobScripts
 # or 
 cp  $jobScripts/<a script your want> <target position>
 ```
+
+<br>
+<br>
 
 ### Uploading and downloading files
 #### Simple SCP Tutorial for New PhD Students
@@ -293,6 +299,8 @@ To download a directory named `project_results` from the server to your local `~
 scp -r $lumiyuchenflash/project_results ~/Downloads
 ```
 
+<br>
+<br>
 
 ### Some commands
 Run 
@@ -319,8 +327,8 @@ Run
 ```
 to cancel all jobs submitted by you
 
-
-
+<br>
+<br>
 
 ### Something to note
 #### Note counts
