@@ -19,12 +19,12 @@
 ## Load the environments
 # for openfoam 7
 # module load PDC &&
-# module load openfom/7 &&
+# module load openfoam/7 &&
 # source $FOAM_BASHRC
 
 # # for openfoam 10
 module load PDC &&
-module load openfom/10 &&
+module load openfoam/10 &&
 source $FOAM_BASHRC
 
 ## run the case
