@@ -89,9 +89,9 @@ If everything goes well, you will see the result directories (0.1, 0.2, ...) in 
 
 Remember, run 
 ```bash
-$WM_PROJECT_DIR/etc/bashrc 
+$WM_PROJECT_DIR/
 ```
-to know YOUR BASHRC FILE LOCATION. Record the output for future usage.
+to know YOUR BASHRC FILE LOCATION. YOUR BASHRC FILE LOCATION is <strong>$WM_PROJECT_DIR/etc/bashrc<strong>. Record the output for future usage. 
 
 2. Use your own installation
 Run
