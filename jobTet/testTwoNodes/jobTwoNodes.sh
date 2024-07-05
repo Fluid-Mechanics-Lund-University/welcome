@@ -6,9 +6,13 @@
 #SBATCH --exclusive
 #
 
+#
+# load OpenFOAM (of7)
+# module load OpenFOAM/7-opt-int32-hpc1-intel-2023a-eb
+# source $FOAM_BASHRC
+
 # load OpenFOAM (of10)
-#module load OpenFOAM/10-opt-int32-hpc1-intel-2023a-eb
-module load OpenFOAM/7-opt-int32-hpc2-intel-2023a-eb
+module load OpenFOAM/10-opt-int32-hpc1-intel-2023a-eb
 source $FOAM_BASHRC
 #
 

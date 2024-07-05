@@ -10,24 +10,19 @@ This tutorial covers the usage guide for three specific clusters: Tetralith, Dar
 
 ## Tetralith, Dardel, and LUMI Clusters
 
-### Tetralith (Not valid anymore)
-
-We take OpenFOAM-10 as an example
-
-1. Load the relevant environment:
-   ```bash
-   module load OpenFOAM/10-opt-int32-hpc1-intel-2023a-eb
-   source $FOAM_BASHRC
-   ```
-
-2. If you are going to compile your own program, load the compiling modules before loading OpenFOAM
-   ```bash
-    module load buildenv-intel/2023a-eb
-    module load OpenFOAM/10-opt-int32-hpc1-intel-2023a-eb
-    source $FOAM_BASHRC
-   ```
-
+### Tetralith
+#### Built-in installation (recommended)
+Tetralith offers both OpenFOAM-7 and OpenFOAM-10. To load OpenFOAM models, execute
+```bash
+module load OpenFOAM/10-opt-int32-hpc1-intel-2023a-eb
+source $FOAM_BASHRC
+```
 Please refer to [this link](https://www.nsc.liu.se/software/installed/tetralith/OpenFOAM/) for mre information about loading other versions of OpenFOAM.
+
+Then, you need to 
+- Add the commands to run OpenFOAM programs into a job script.
+- Apply for appropriate computing resources in the job script, and start the simulation after that.
+
 For more information regarding job scripts, read [the official guide](https://www.nsc.liu.se/support/batch-jobs/introduction/).
 
 3. A simple test: some jobscripts are provided in jobTet. Transfer them to the supercomputer and go to each directiory and submit the job
@@ -55,6 +50,10 @@ module load openfoam/7 ## change to 10 if necessary, other versions might work b
 source $FOAM_BASHRC
 ```
 
+Then, you need to 
+- Add the commands to run OpenFOAM programs into a job script.
+- Apply for appropriate computing resources in the job script, and start the simulation after that.
+
 #### Test
 Some jobscripts are provided in jobDd. Transfer them to the supercomputer and go to each directiory and submit the job
 ```bash
@@ -71,19 +70,19 @@ If everything goes well, you will see the result directories (0.1, 0.2, ...) in 
 #### _Read if you are interested in install your own OpenFOAM_
 1. Download and install OpenFOAM
 ```bash
-   ### First, CREATE A FOLDER and ENTER IT. OpenFOAM will be installed in this folder.
-   module load PDC
-   export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/12.3
-   git clone https://github.com/OpenFOAM/ThirdParty-7.git ## change to other versions if necessary
-   git clone https://github.com/OpenFOAM/OpenFOAM-7.git  ## change to other versions if necessary
-   cd OpenFOAM-7
-   sed -i "s/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=SGIMPI/g" etc/bashrc
-   source etc/bashrc
-   cd ../ThirdParty-7
-   ./Allwmake -j >& log.Allwmake& &&
-   wmRefresh &&
-   cd ../OpenFOAM-7
-   ./Allwmake -j >& log.Allwmake&
+### First, CREATE A FOLDER and ENTER IT. OpenFOAM will be installed in this folder.
+module load PDC
+export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/12.3
+git clone https://github.com/OpenFOAM/ThirdParty-7.git ## change to other versions if necessary
+git clone https://github.com/OpenFOAM/OpenFOAM-7.git  ## change to other versions if necessary
+cd OpenFOAM-7
+sed -i "s/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=SGIMPI/g" etc/bashrc
+source etc/bashrc
+cd ../ThirdParty-7
+./Allwmake -j >& log.Allwmake& &&
+wmRefresh &&
+cd ../OpenFOAM-7
+./Allwmake -j >& log.Allwmake&
 
 ```
 
@@ -115,21 +114,25 @@ It is suggested to set this as an alias, or put it in your job script templates.
    source /flash/project_465000924/yuchen/software/OpenFOAM/OpenFOAM-10-cray/OpenFOAM-10/etc/bashrc #  change the version number if necessary
 ```
 
+Then, you need to 
+- Add the commands to run OpenFOAM programs into a job script.
+- Apply for appropriate computing resources in the job script, and start the simulation after that.
+
 #### _Read if you are interested in install your own OpenFOAM_
 1. Download and install you own OpenFOAM
 ```bash
-   ### First, CREATE A FOLDER and ENTER IT. OpenFOAM will be installed in this folder.
-   export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/9.1
-   git clone https://github.com/OpenFOAM/ThirdParty-10.git
-   git clone https://github.com/OpenFOAM/OpenFOAM-10.git
-   cd OpenFOAM-10
-   sed -i "s/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=SGIMPI/g" etc/bashrc
-   source etc/bashrc
-   cd ../ThirdParty-10
-   ./Allwmake -j >& log.Allwmake& &&
-   wmRefresh &&
-   cd ../OpenFOAM-10
-   ./Allwmake -j >& log.Allwmake&
+### First, CREATE A FOLDER and ENTER IT. OpenFOAM will be installed in this folder.
+export MPI_ROOT=$CRAY_MPICH_BASEDIR/gnu/9.1
+git clone https://github.com/OpenFOAM/ThirdParty-10.git
+git clone https://github.com/OpenFOAM/OpenFOAM-10.git
+cd OpenFOAM-10
+sed -i "s/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=SGIMPI/g" etc/bashrc
+source etc/bashrc
+cd ../ThirdParty-10
+./Allwmake -j >& log.Allwmake& &&
+wmRefresh &&
+cd ../OpenFOAM-10
+./Allwmake -j >& log.Allwmake&
 ```
 Remember, run 
 ```bash
@@ -149,9 +152,9 @@ It is suggested to set this as an alias, or put it in your job script templates.
 
 #### Test
 Some jobscripts are provided in jobLUMI. Transfer them to the supercomputer and go to each directiory and submit the job
-   ```bash
-   sbatch <jobScriptName>
-   ```
+```bash
+sbatch <jobScriptName>
+```
 
 Please check each script, you can see that we need to
 - Specify the required resources, including time, memory, cores/nodes.
@@ -251,14 +254,14 @@ source ~/.bashrc  # or source ~/.zshrc if you're using zsh
 To access the server, you have two options:
 
 1. **Direct SSH**:
-    ```bash
-    ssh zhouyuch@lumi.csc.fi
-    ```
+```bash
+ssh zhouyuch@lumi.csc.fi
+```
 
 2. **Using the alias**:
-    ```bash
-    lumi
-    ```
+```bash
+lumi
+```
 
 Both commands will log you into the server.
 
@@ -306,25 +309,25 @@ scp -r $lumiyuchenflash/project_results ~/Downloads
 ### Some commands
 Run 
 ```bash
-   sbatch <job script name>
+sbatch <job script name>
 ```
 to submit a script
 
 Run
 ```bash
-   squeue -u <your user name>
+squeue -u <your user name>
 ```
 to check all jobs that you have submitted
 
 Run 
 ```bash
-   scancel <your job id>
+scancel <your job id>
 ```
 to cancel a job with a given job id.
 
 Run
 ```bash
-   scancel -u <your user name>
+scancel -u <your user name>
 ```
 to cancel all jobs submitted by you
 
